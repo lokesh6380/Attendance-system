@@ -1,1 +1,84 @@
-<p>login works!</p>
+<app-navbar></app-navbar>
+
+<div class="login-container">
+
+  <div class="login-left">
+    <img src="assets/login-karate.png" alt="Karate Image">
+  </div>
+
+  <div class="login-right">
+
+    <div class="glass-card">
+
+      <h2>Welcome Back 🥋</h2>
+      <p>Login to continue your journey</p>
+
+      <form (ngSubmit)="onLogin()">
+
+        <!-- EMAIL -->
+        <div class="input-group">
+          <span class="input-icon">📧</span>
+          <input type="email"
+                 [(ngModel)]="email"
+                 name="email"
+                 required>
+          <label>Email</label>
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="input-group password-group"
+             [class.shake]="shake">
+
+          <span class="input-icon">🔒</span>
+
+          <input [type]="showPassword ? 'text' : 'password'"
+                 [(ngModel)]="password"
+                 name="password"
+                 required>
+
+          <label>Password</label>
+
+          <button type="button"
+                  class="eye-icon"
+                  (click)="togglePassword()">
+
+            <i class="fa-solid"
+               [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'">
+            </i>
+
+          </button>
+
+        </div>
+
+        <!-- ERROR -->
+        <p class="error" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </p>
+
+        <!-- TIMER -->
+        <p class="timer" *ngIf="lockTime > 0">
+          Try again in {{ lockTime }} seconds
+        </p>
+
+        <!-- BUTTON -->
+        <button type="submit"
+                class="login-btn"
+                [disabled]="lockTime > 0 || isLoading">
+
+          {{ isLoading ? 'Logging in...' : 'Login' }}
+
+        </button>
+
+      </form>
+
+      <!-- REGISTER -->
+      <p class="register-text">
+        Not a user?
+        <span (click)="goToRegister()">Register</span>
+      </p>
+
+    </div>
+
+  </div>
+
+</div>

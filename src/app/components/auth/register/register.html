@@ -1,1 +1,130 @@
-<p>register works!</p>
+<app-navbar></app-navbar>
+
+<div class="register-container">
+
+  <!-- LEFT IMAGE -->
+  <div class="register-left">
+    <img src="assets/register-karate.png" alt="Register">
+  </div>
+
+  <!-- RIGHT FORM -->
+  <div class="register-right">
+
+    <div class="glass-card">
+
+      <h2>Create Account 🥋</h2>
+      <p>Join Karate Management System</p>
+
+      <form (ngSubmit)="onRegister()" class="form-scroll">
+
+        <!-- NAME -->
+        <div class="row">
+          <div class="input-group">
+            <input [(ngModel)]="firstName" name="firstName" required>
+            <label>First Name</label>
+          </div>
+
+          <div class="input-group">
+            <input [(ngModel)]="lastName" name="lastName" required>
+            <label>Last Name</label>
+          </div>
+        </div>
+
+        <!-- AGE + MOBILE -->
+        <div class="row">
+          <div class="input-group">
+            <input type="number" [(ngModel)]="age" name="age" required>
+            <label>Age</label>
+          </div>
+
+          <div class="input-group">
+            <input [(ngModel)]="mobile" name="mobile" required>
+            <label>Mobile</label>
+          </div>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="input-group">
+          <input type="email" [(ngModel)]="email" name="email" required>
+          <label>Email</label>
+        </div>
+
+        <!-- STANDARD + DOJO -->
+        <div class="row">
+          <div class="input-group">
+            <input [(ngModel)]="standard" name="standard" required>
+            <label>Standard</label>
+          </div>
+
+          <div class="input-group">
+            <input [(ngModel)]="dojo" name="dojo" required>
+            <label>Dojo</label>
+          </div>
+        </div>
+
+        <!-- MASTER -->
+        <div class="input-group">
+          <input [(ngModel)]="master" name="master" required>
+          <label>Master Name</label>
+        </div>
+
+        <!-- ROLE -->
+        <div class="input-group">
+          <select [(ngModel)]="role" name="role" required>
+            <option value="">Select Role</option>
+            <option value="master">Master</option>
+            <option value="submaster">Sub Master</option>
+            <option value="student">Student</option>
+          </select>
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="input-group password-group">
+          <input [type]="showPassword ? 'text' : 'password'"
+                 [(ngModel)]="password"
+                 name="password"
+                 required>
+          <label>Password</label>
+
+          <button type="button" class="eye-icon"
+                  (click)="togglePassword()">
+            👁
+          </button>
+        </div>
+
+        <!-- CONFIRM PASSWORD -->
+        <div class="input-group password-group">
+          <input [type]="showConfirm ? 'text' : 'password'"
+                 [(ngModel)]="confirmPassword"
+                 name="confirmPassword"
+                 required>
+          <label>Confirm Password</label>
+
+          <button type="button" class="eye-icon"
+                  (click)="toggleConfirm()">
+            👁
+          </button>
+        </div>
+
+        <!-- ERROR -->
+        <p class="error" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </p>
+
+        <!-- BUTTON -->
+        <button class="register-btn">
+          Register
+        </button>
+
+      </form>
+
+      <p class="login-text">
+        Already a user?
+        <span (click)="goToLogin()">Login</span>
+      </p>
+
+    </div>
+
+  </div>
+
+</div>

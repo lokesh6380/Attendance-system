@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-import { Login } from './components/auth/login/login';
+import { LoginComponent } from './components/auth/login/login';
 import { Register } from './components/auth/register/register';
 import { Guards } from './components/guards/guards';
 import { Dashboard } from './components/dashboard/dashboard';
@@ -14,7 +14,7 @@ export const routes: Routes = [
   { path: '', component: LandingPageComponent },
 
   // Auth routes
-  { path: 'login', component: Login },
+  { path: 'login', component: LoginComponent },
   { path: 'register', component: Register },
 
   // Main app routes
