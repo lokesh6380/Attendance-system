@@ -1,9 +1,25 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-landing-page',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './landing-page.html',
-  styleUrl: './landing-page.css',
+  styleUrls: ['./landing-page.css']
 })
-export class LandingPage {}
+export class LandingPageComponent {
+
+  isDarkMode = false;
+
+  constructor(private router: Router) {}
+
+  toggleDarkMode() {
+    this.isDarkMode = !this.isDarkMode;
+  }
+
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
+}

@@ -7,11 +7,11 @@ import { Dashboard } from './components/dashboard/dashboard';
 import { Students } from './components/students/students';
 import { Attendance } from './components/attendance/attendance';
 import { Reports } from './components/reports/reports';
-import { LandingPage } from './components/landing-page/landing-page';
+import { LandingPageComponent } from './components/landing-page/landing-page';
 import { Navbar } from './components/navbar/navbar';
 
 export const routes: Routes = [
-  { path: '', component: LandingPage },
+  { path: '', component: LandingPageComponent },
 
   // Auth routes
   { path: 'login', component: Login },

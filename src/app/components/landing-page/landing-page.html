@@ -1,3 +1,53 @@
-<h1>Welcome to Karate Attendance System</h1>
+<div [ngClass]="{'dark-mode': isDarkMode}" class="landing-page">
 
-<button routerLink="/login">Get Started</button>
+  <!-- Dark Mode Toggle -->
+  <div class="toggle-btn">
+    <button (click)="toggleDarkMode()">
+      {{ isDarkMode ? '☀️' : '🌙' }}
+    </button>
+  </div>
+
+  <!-- HERO SECTION (FULL HEIGHT) -->
+  <div class="hero-section">
+
+    <!-- LEFT CONTENT -->
+    <div class="hero-text fade-in">
+      <h1>Karate Attendance System</h1>
+      <p>
+        Smart way to manage your karate academy. Track attendance,
+        monitor student progress, and generate powerful reports.
+      </p>
+
+      <button class="start-btn" (click)="goToLogin()">
+        Get Started
+      </button>
+    </div>
+
+    <!-- RIGHT IMAGE -->
+    <div class="hero-image slide-in">
+      <img src="assets/karate.png" alt="Karate">
+    </div>
+
+  </div>
+
+  <!-- CARDS SECTION -->
+  <div class="cards-section">
+
+    <div class="card fade-in">
+      <h3>📅 Attendance</h3>
+      <p>Track daily attendance quickly and efficiently.</p>
+    </div>
+
+    <div class="card fade-in delay-1">
+      <h3>👨‍🎓 Students</h3>
+      <p>Manage student records, belts, and performance.</p>
+    </div>
+
+    <div class="card fade-in delay-2">
+      <h3>📊 Reports</h3>
+      <p>Generate insights and analytics in seconds.</p>
+    </div>
+
+  </div>
+
+</div>
