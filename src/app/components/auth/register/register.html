@@ -2,12 +2,12 @@
 
 <div class="register-container">
 
-  <!-- LEFT IMAGE -->
+  <!-- LEFT -->
   <div class="register-left">
     <img src="assets/register-karate.png" alt="Register">
   </div>
 
-  <!-- RIGHT FORM -->
+  <!-- RIGHT -->
   <div class="register-right">
 
     <div class="glass-card">
@@ -15,7 +15,13 @@
       <h2>Create Account 🥋</h2>
       <p>Join Karate Management System</p>
 
-      <form (ngSubmit)="onRegister()" class="form-scroll">
+      <form>
+
+        <!-- USER ID -->
+        <div class="input-group">
+          <input [(ngModel)]="userId" name="userId" required>
+          <label>User ID</label>
+        </div>
 
         <!-- NAME -->
         <div class="row">
@@ -30,42 +36,16 @@
           </div>
         </div>
 
-        <!-- AGE + MOBILE -->
-        <div class="row">
-          <div class="input-group">
-            <input type="number" [(ngModel)]="age" name="age" required>
-            <label>Age</label>
-          </div>
-
-          <div class="input-group">
-            <input [(ngModel)]="mobile" name="mobile" required>
-            <label>Mobile</label>
-          </div>
+        <!-- MOBILE -->
+        <div class="input-group">
+          <input [(ngModel)]="mobile" name="mobile" required>
+          <label>Mobile</label>
         </div>
 
         <!-- EMAIL -->
         <div class="input-group">
           <input type="email" [(ngModel)]="email" name="email" required>
           <label>Email</label>
-        </div>
-
-        <!-- STANDARD + DOJO -->
-        <div class="row">
-          <div class="input-group">
-            <input [(ngModel)]="standard" name="standard" required>
-            <label>Standard</label>
-          </div>
-
-          <div class="input-group">
-            <input [(ngModel)]="dojo" name="dojo" required>
-            <label>Dojo</label>
-          </div>
-        </div>
-
-        <!-- MASTER -->
-        <div class="input-group">
-          <input [(ngModel)]="master" name="master" required>
-          <label>Master Name</label>
         </div>
 
         <!-- ROLE -->
@@ -87,9 +67,7 @@
           <label>Password</label>
 
           <button type="button" class="eye-icon"
-                  (click)="togglePassword()">
-            👁
-          </button>
+                  (click)="togglePassword()">👁</button>
         </div>
 
         <!-- CONFIRM PASSWORD -->
@@ -101,18 +79,13 @@
           <label>Confirm Password</label>
 
           <button type="button" class="eye-icon"
-                  (click)="toggleConfirm()">
-            👁
-          </button>
+                  (click)="toggleConfirm()">👁</button>
         </div>
 
-        <!-- ERROR -->
-        <p class="error" *ngIf="errorMessage">
-          {{ errorMessage }}
-        </p>
-
         <!-- BUTTON -->
-        <button class="register-btn">
+        <button class="register-btn"
+                [disabled]="!isFormValid()"
+                (click)="onRegister()">
           Register
         </button>
 

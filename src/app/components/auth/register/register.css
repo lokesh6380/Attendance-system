@@ -1,12 +1,11 @@
-/* MAIN */
+/* MAIN CONTAINER */
 .register-container {
   display: flex;
-  height: 100vh;
-  overflow: hidden;
+  height: calc(100vh - 50px); /* avoid navbar overlap */
   background: linear-gradient(135deg, #2B3467, #3f4a8a);
 }
 
-/* LEFT */
+/* LEFT SIDE */
 .register-left {
   width: 50%;
   display: flex;
@@ -15,11 +14,11 @@
 }
 
 .register-left img {
-  width: 80%;
-  max-width: 450px;
+  width: 75%;
+  max-width: 420px;
 }
 
-/* RIGHT */
+/* RIGHT SIDE */
 .register-right {
   width: 50%;
   display: flex;
@@ -27,57 +26,79 @@
   align-items: center;
 }
 
-/* CARD */
+/* 🔥 GLASS CARD (WIDER + PREMIUM) */
 .glass-card {
-  width: 420px;
-  max-height: 90vh;
-  padding: 30px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(20px);
-  color: #FCFFE7;
-  box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+  width: 480px;              /* ⬅️ increased width */
+  padding: 10px;
+  border-radius: 24px;
 
-  display: flex;
-  flex-direction: column;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(25px);
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  color: #FCFFE7;
+
+  transition: 0.3s;
 }
 
-/* SCROLL INSIDE FORM */
-.form-scroll {
-  overflow-y: auto;
-  padding-right: 5px;
+/* TITLE */
+.glass-card h2 {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 5px;
+}
+
+.glass-card p {
+  text-align: center;
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #dcdcdc;
 }
 
 /* ROW */
 .row {
   display: flex;
-  gap: 10px;
+  gap: 15px;
 }
 
-/* INPUT */
+/* INPUT GROUP */
 .input-group {
   position: relative;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   flex: 1;
 }
 
+/* INPUT STYLE */
 .input-group input,
 .input-group select {
   width: 100%;
-  padding: 12px;
-  border-radius: 10px;
+  padding: 12px 12px;
+  border-radius: 12px;
   border: none;
-  background: rgba(255,255,255,0.15);
-  color: #FCFFE7;
+
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  font-size: 14px;
+
   outline: none;
+  transition: 0.2s;
+}
+
+/* 🔥 INPUT FOCUS EFFECT */
+.input-group input:focus,
+.input-group select:focus {
+  background: rgba(255,255,255,0.25);
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.2);
 }
 
 /* LABEL */
 .input-group label {
   position: absolute;
   top: 12px;
-  left: 12px;
+  left: 14px;
+  font-size: 12px;
   color: #cfd6b0;
+  pointer-events: none;
 }
 
 /* PASSWORD */
@@ -85,7 +106,7 @@
   position: relative;
 }
 
-/* EYE */
+/* EYE ICON */
 .eye-icon {
   position: absolute;
   right: 10px;
@@ -93,6 +114,7 @@
   border: none;
   background: transparent;
   cursor: pointer;
+  color: #fff;
 }
 
 /* BUTTON */
@@ -101,29 +123,49 @@
   padding: 12px;
   border-radius: 12px;
   border: none;
+
   background: #FCFFE7;
   color: #2B3467;
   font-weight: bold;
+
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 12px;
+
+  transition: 0.3s;
+}
+
+/* HOVER EFFECT */
+.register-btn:hover {
+  background: #e6e8c5;
+  transform: translateY(-1px);
+}
+
+/* DISABLED */
+.register-btn:disabled {
+  background: #999;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 /* LOGIN TEXT */
 .login-text {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 12px;
+  font-size: 14px;
 }
 
-/* ERROR */
-.error {
-  color: #ff9aa2;
+.login-text span {
+  cursor: pointer;
+  font-weight: bold;
+  color: #fff;
 }
 
 /* RESPONSIVE */
 @media (max-width: 992px) {
   .register-container {
     flex-direction: column;
-    overflow-y: auto;
+    justify-content: center;
+    align-items: center;
   }
 
   .register-left {
@@ -132,11 +174,10 @@
 
   .register-right {
     width: 100%;
-    padding: 20px;
   }
 
   .glass-card {
-    width: 100%;
-    max-height: none;
+    width: 90%;
+    max-width: 420px;
   }
 }

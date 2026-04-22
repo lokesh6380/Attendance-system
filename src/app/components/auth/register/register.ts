@@ -1,38 +1,27 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { Navbar } from '../../navbar/navbar';
-
 @Component({
   selector: 'app-register',
-  standalone: true,
-  imports: [CommonModule, FormsModule, Navbar],
+   standalone: true,
+  imports: [FormsModule, Navbar],
   templateUrl: './register.html',
   styleUrls: ['./register.css']
 })
 export class Register {
 
+  userId = '';
   firstName = '';
   lastName = '';
-  age: number | null = null;
-
   mobile = '';
   email = '';
-
-  standard = '';
-  dojo = '';
-  master = '';
-
   role = '';
-
   password = '';
   confirmPassword = '';
 
   showPassword = false;
   showConfirm = false;
-
-  errorMessage = '';
 
   constructor(private router: Router) {}
 
@@ -44,36 +33,64 @@ export class Register {
     this.showConfirm = !this.showConfirm;
   }
 
+  // VALIDATION
+  isFormValid(): boolean {
+    return !!(
+      this.userId &&
+      this.firstName &&
+      this.lastName &&
+      this.mobile &&
+      this.email &&
+      this.role &&
+      this.password &&
+      this.confirmPassword
+    );
+  }
+
+  // REGISTER
   onRegister() {
 
-    // VALIDATION
-    if (!this.firstName || !this.lastName) {
-      this.errorMessage = 'Name is required';
-      return;
-    }
-
-    if (!this.age || this.age < 5) {
-      this.errorMessage = 'Enter valid age';
-      return;
-    }
-
-    if (!this.email.includes('@')) {
-      this.errorMessage = 'Invalid email';
+    if (!this.isFormValid()) {
+      alert("⚠️ Fill all fields");
       return;
     }
 
     if (this.password !== this.confirmPassword) {
-      this.errorMessage = 'Passwords do not match';
+      alert("❌ Passwords do not match");
       return;
     }
 
-    if (this.role === 'master') {
-      console.log('Master access granted');
+    let users = JSON.parse(localStorage.getItem('users') || '[]');
+
+    // 🚨 CHECK USER ID DUPLICATE
+    const idExists = users.find((u: any) => u.userId === this.userId);
+    if (idExists) {
+      alert("⚠️ User ID already exists");
+      return;
     }
 
-    this.errorMessage = '';
+    // 🚨 CHECK EMAIL DUPLICATE
+    const emailExists = users.find((u: any) => u.email === this.email);
+    if (emailExists) {
+      alert("⚠️ Email already registered");
+      return;
+    }
 
-    alert('Registration Successful ✅');
+    const newUser = {
+      userId: this.userId,
+      firstName: this.firstName,
+      lastName: this.lastName,
+      mobile: this.mobile,
+      email: this.email,
+      role: this.role,
+      password: this.password
+    };
+
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
+
+    alert("✅ Registration Successful!");
+
     this.router.navigate(['/login']);
   }
 
