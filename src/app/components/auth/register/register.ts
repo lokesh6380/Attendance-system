@@ -98,3 +98,4 @@ export class Register {
     this.router.navigate(['/login']);
   }
 }
+// this is register component
