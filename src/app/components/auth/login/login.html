@@ -2,22 +2,23 @@
 
 <div class="login-container">
 
+  <!-- LEFT -->
   <div class="login-left">
-    <img src="assets/login-karate.png" alt="Karate Image">
+    <img src="assets/login-karate.png" alt="Karate">
   </div>
 
+  <!-- RIGHT -->
   <div class="login-right">
 
     <div class="glass-card">
 
-      <h2>Welcome Back 🥋</h2>
-      <p>Login to continue your journey</p>
+      <h2>Welcome Back</h2>
+      <p>Login to your account</p>
 
       <form (ngSubmit)="onLogin()">
 
         <!-- EMAIL -->
         <div class="input-group">
-          <span class="input-icon">📧</span>
           <input type="email"
                  [(ngModel)]="email"
                  name="email"
@@ -29,8 +30,6 @@
         <div class="input-group password-group"
              [class.shake]="shake">
 
-          <span class="input-icon">🔒</span>
-
           <input [type]="showPassword ? 'text' : 'password'"
                  [(ngModel)]="password"
                  name="password"
@@ -38,14 +37,11 @@
 
           <label>Password</label>
 
+          <!-- MODERN EYE BUTTON -->
           <button type="button"
-                  class="eye-icon"
+                  class="eye-toggle"
                   (click)="togglePassword()">
-
-            <i class="fa-solid"
-               [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'">
-            </i>
-
+            {{ showPassword ? 'Hide' : 'Show' }}
           </button>
 
         </div>
@@ -57,7 +53,12 @@
 
         <!-- TIMER -->
         <p class="timer" *ngIf="lockTime > 0">
-          Try again in {{ lockTime }} seconds
+          Try again in {{ lockTime }}s
+        </p>
+
+        <!-- FORGOT -->
+        <p class="forgot" (click)="forgotPassword()">
+          Forgot Password?
         </p>
 
         <!-- BUTTON -->
@@ -65,13 +66,12 @@
                 class="login-btn"
                 [disabled]="lockTime > 0 || isLoading">
 
-          {{ isLoading ? 'Logging in...' : 'Login' }}
+          {{ isLoading ? 'Please wait...' : 'Login' }}
 
         </button>
 
       </form>
 
-      <!-- REGISTER -->
       <p class="register-text">
         Not a user?
         <span (click)="goToRegister()">Register</span>
