@@ -68,10 +68,12 @@ export class Register {
     users.push({
       firstName: this.firstName,
       lastName: this.lastName,
+      name: `${this.firstName} ${this.lastName}`.trim(),
       mobile: this.mobile,
       email: this.email,
-      role: this.role,
-      password: this.password
+      role: this.role.trim().toLowerCase(),
+      password: this.password,
+      status: 'pending'
     });
 
     localStorage.setItem('users', JSON.stringify(users));

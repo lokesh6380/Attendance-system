@@ -157,7 +157,7 @@ export class Login implements OnInit, OnDestroy {
 
       localStorage.setItem('currentUser', JSON.stringify(user));
 
-      const role = user.role.toLowerCase();
+      const role = (user.role || '').toString().toLowerCase();
 
       if (role === 'instructor') {
         this.router.navigate(['/instructor-dashboard/overview']);

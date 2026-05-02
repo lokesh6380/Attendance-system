@@ -2,11 +2,20 @@
 
 <div class="dashboard">
 
-  <!-- TOP CARDS -->
+  <!-- SEARCH BAR -->
+  <div class="top-bar">
+    <input
+      type="text"
+      placeholder="Search users by name, email, role, or mobile..."
+      [(ngModel)]="searchText"
+    />
+  </div>
+
+  <!-- CARDS -->
   <div class="card-grid">
 
     <div class="card total">
-      <h3>Total Students</h3>
+      <h3>Total Users</h3>
       <p>{{ totalStudents }}</p>
     </div>
 
@@ -30,26 +39,32 @@
 
   </div>
 
-  <!-- STUDENT LIST -->
+  <!-- TABLE -->
   <div class="table-container">
 
-    <h2>Student Requests</h2>
+    <h2>Registered Users</h2>
 
     <table>
       <thead>
         <tr>
+          <th>ID</th>
           <th>Name</th>
           <th>Email</th>
+          <th>Mobile</th>
+          <th>Role</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr *ngFor="let student of students">
+        <tr *ngFor="let student of paginatedStudents">
 
+          <td>#{{ student.id }}</td>
           <td>{{ student.name }}</td>
           <td>{{ student.email }}</td>
+          <td>{{ student.mobile }}</td>
+          <td>{{ student.roleLabel || student.role }}</td>
 
           <td>
             <span class="status" [ngClass]="student.status">
@@ -70,17 +85,32 @@
               Delete
             </button>
 
-            <button class="pending-btn"
-              *ngIf="student.status === 'approved'">
-              Approved
-            </button>
-
           </td>
 
         </tr>
       </tbody>
 
     </table>
+
+    <!-- PAGINATION -->
+    <div class="pagination">
+
+      <button (click)="prevPage()" [disabled]="currentPage === 1">
+        Prev
+      </button>
+
+      <button
+        *ngFor="let p of [].constructor(totalPages); let i = index"
+        (click)="goToPage(i + 1)"
+        [class.active]="currentPage === i + 1">
+        {{ i + 1 }}
+      </button>
+
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+        Next
+      </button>
+
+    </div>
 
   </div>
 
