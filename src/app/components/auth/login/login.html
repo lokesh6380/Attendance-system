@@ -58,11 +58,6 @@
           </div>
         </div>
 
-        <!-- 🔥 NEW COUNTDOWN DISPLAY (ADDED) -->
-        <div *ngIf="lockTime > 0" class="lock-info">
-          🔒 Login disabled for <strong>{{ lockTime }}</strong> seconds
-        </div>
-
         <!-- FORGOT -->
         <p class="forgot" (click)="forgotPassword()" [class.disabled]="lockTime > 0">
           Forgot Password?

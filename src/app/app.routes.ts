@@ -10,7 +10,7 @@ import { Reports } from './components/reports/reports';
 import { LandingPageComponent } from './components/landing-page/landing-page';
 import { Navbar } from './components/navbar/navbar';
 import { InstructorDashboard } from './components/dashboard/instructor-dashboard/instructor-dashboard';
-import { Overview } from './components/dashboard/instructor-dashboard/overview/overview';
+import { OverviewComponent } from './components/dashboard/instructor-dashboard/overview/overview';
 import { StudentDashboard } from './components/dashboard/student-dashboard/student-dashboard';
 
 export const routes: Routes = [
@@ -22,7 +22,7 @@ export const routes: Routes = [
 
   // Instructor Dashboard
   { path: 'instructor-dashboard', component: InstructorDashboard, children: [
-    { path: 'overview', component: Overview },
+    { path: 'overview', component: OverviewComponent },
     { path: '', redirectTo: 'overview', pathMatch: 'full' }
   ]},
 

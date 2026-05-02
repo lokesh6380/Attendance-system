@@ -1,1 +1,29 @@
-<p>shared-navbar works!</p>
+
+<nav class="navbar">
+
+  <!-- LEFT: Logo -->
+  <div class="logo" (click)="goToDashboard()">
+    🥋 Karate Academy
+  </div>
+
+  <!-- CENTER: Links -->
+  <div class="nav-links">
+    <a (click)="goToDashboard()">Dashboard</a>
+    <a (click)="goToStudents()">Students</a>
+    <a (click)="goToAttendance()">Attendance</a>
+  </div>
+
+  <!-- RIGHT: Profile + Logout -->
+  <div class="nav-actions">
+
+    <button class="profile-btn" (click)="goToProfile()">
+      👤 Profile
+    </button>
+
+    <button class="logout-btn" (click)="logout()">
+      🚪 Logout
+    </button>
+
+  </div>
+
+</nav>

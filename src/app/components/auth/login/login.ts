@@ -26,6 +26,10 @@ export class Login implements OnInit, OnDestroy {
 
   constructor(private router: Router, private ngZone: NgZone) {}
 
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+  }
+
   ngOnInit() {
     this.restoreLockState();
   }
@@ -38,6 +42,10 @@ export class Login implements OnInit, OnDestroy {
 
   /* RESTORE LOCK AFTER REFRESH */
   restoreLockState() {
+    if (!this.isBrowser()) {
+      return;
+    }
+
     const savedLockStartTime = localStorage.getItem('loginLockStartTime');
     const savedAttempts = localStorage.getItem('loginAttempts');
 
@@ -65,20 +73,11 @@ export class Login implements OnInit, OnDestroy {
 
     this.lockInterval = setInterval(() => {
       this.ngZone.run(() => {
-
-        // ✅ SAFE DECREMENT
         this.lockTime = Math.max(0, this.lockTime - 1);
 
-        // ✅ UPDATE MESSAGE LIVE
-        if (this.lockTime > 0) {
-          this.errorMessage = `🔒 Account locked. Try again in ${this.lockTime}s`;
-        }
-
-        // ✅ RESET WHEN DONE
         if (this.lockTime === 0) {
           this.clearLockState();
         }
-
       });
     }, 1000);
   }
@@ -92,9 +91,11 @@ export class Login implements OnInit, OnDestroy {
     this.lockTime = 0;
     this.attempts = 0;
 
-    localStorage.removeItem('loginLockStartTime');
-    localStorage.removeItem('loginAttempts');
-    localStorage.removeItem('loginLockTime');
+    if (this.isBrowser()) {
+      localStorage.removeItem('loginLockStartTime');
+      localStorage.removeItem('loginAttempts');
+      localStorage.removeItem('loginLockTime');
+    }
 
     this.errorMessage = '';
   }
@@ -117,8 +118,10 @@ export class Login implements OnInit, OnDestroy {
     this.lockTime = 60;
     this.lockStartTime = Date.now();
 
-    localStorage.setItem('loginLockStartTime', this.lockStartTime.toString());
-    localStorage.setItem('loginAttempts', this.attempts.toString());
+    if (this.isBrowser()) {
+      localStorage.setItem('loginLockStartTime', this.lockStartTime.toString());
+      localStorage.setItem('loginAttempts', this.attempts.toString());
+    }
 
     this.startTimer();
   }
