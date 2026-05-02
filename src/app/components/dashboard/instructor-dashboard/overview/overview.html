@@ -1,0 +1,87 @@
+<app-shared-navbar></app-shared-navbar>
+
+<div class="dashboard">
+
+  <!-- TOP CARDS -->
+  <div class="card-grid">
+
+    <div class="card total">
+      <h3>Total Students</h3>
+      <p>{{ totalStudents }}</p>
+    </div>
+
+    <div class="card approved">
+      <h3>Approved</h3>
+      <p>{{ approvedStudents }}</p>
+    </div>
+
+    <div class="card pending">
+      <h3>Pending</h3>
+      <p>{{ pendingStudents }}</p>
+    </div>
+
+    <div class="card percentage">
+      <h3>Pending %</h3>
+      <p>{{ pendingPercentage }}%</p>
+      <div class="progress-bar">
+        <div class="fill" [style.width.%]="pendingPercentage"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- STUDENT LIST -->
+  <div class="table-container">
+
+    <h2>Student Requests</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let student of students">
+
+          <td>{{ student.name }}</td>
+          <td>{{ student.email }}</td>
+
+          <td>
+            <span class="status" [ngClass]="student.status">
+              {{ student.status }}
+            </span>
+          </td>
+
+          <td class="actions">
+
+            <button class="accept"
+              (click)="acceptStudent(student)"
+              *ngIf="student.status === 'pending'">
+              Accept
+            </button>
+
+            <button class="delete"
+              (click)="deleteStudent(student)">
+              Delete
+            </button>
+
+            <button class="pending-btn"
+              *ngIf="student.status === 'approved'">
+              Approved
+            </button>
+
+          </td>
+
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

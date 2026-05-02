@@ -1,4 +1,4 @@
-<app-navbar></app-navbar>
+<app-navbar class="navbar"></app-navbar>
 
 <div class="register-container">
 
@@ -15,47 +15,42 @@
       <h2>Create Account 🥋</h2>
       <p>Join Karate Management System</p>
 
-      <form>
-
-        <!-- USER ID -->
-        <div class="input-group">
-          <input [(ngModel)]="userId" name="userId" required>
-          <label>User ID</label>
-        </div>
+      <form #form="ngForm">
 
         <!-- NAME -->
         <div class="row">
           <div class="input-group">
-            <input [(ngModel)]="firstName" name="firstName" required>
+            <input type="text" [(ngModel)]="firstName" name="firstName" required placeholder=" ">
             <label>First Name</label>
           </div>
 
           <div class="input-group">
-            <input [(ngModel)]="lastName" name="lastName" required>
+            <input type="text" [(ngModel)]="lastName" name="lastName" required placeholder=" ">
             <label>Last Name</label>
           </div>
         </div>
 
         <!-- MOBILE -->
         <div class="input-group">
-          <input [(ngModel)]="mobile" name="mobile" required>
+          <input type="tel" [(ngModel)]="mobile" name="mobile" required placeholder=" ">
           <label>Mobile</label>
         </div>
 
         <!-- EMAIL -->
         <div class="input-group">
-          <input type="email" [(ngModel)]="email" name="email" required>
+          <input type="email" [(ngModel)]="email" name="email" required placeholder=" ">
           <label>Email</label>
         </div>
 
         <!-- ROLE -->
         <div class="input-group">
           <select [(ngModel)]="role" name="role" required>
-            <option value="">Select Role</option>
-            <option value="master">Master</option>
-            <option value="submaster">Sub Master</option>
-            <option value="student">Student</option>
+            <option value="" disabled selected hidden></option>
+            <option value="Instructor">Instructor</option>
+            <option value="Sub Master">Sub Master</option>
+            <option value="Student">Student</option>
           </select>
+          <label>Role</label>
         </div>
 
         <!-- PASSWORD -->
@@ -63,28 +58,25 @@
           <input [type]="showPassword ? 'text' : 'password'"
                  [(ngModel)]="password"
                  name="password"
-                 required>
+                 required placeholder=" ">
           <label>Password</label>
-
-          <button type="button" class="eye-icon"
-                  (click)="togglePassword()">👁</button>
+          <button type="button" class="eye-icon" (click)="togglePassword()">👁</button>
         </div>
 
-        <!-- CONFIRM PASSWORD -->
+        <!-- CONFIRM -->
         <div class="input-group password-group">
           <input [type]="showConfirm ? 'text' : 'password'"
                  [(ngModel)]="confirmPassword"
                  name="confirmPassword"
-                 required>
+                 required placeholder=" ">
           <label>Confirm Password</label>
-
-          <button type="button" class="eye-icon"
-                  (click)="toggleConfirm()">👁</button>
+          <button type="button" class="eye-icon" (click)="toggleConfirm()">👁</button>
         </div>
 
         <!-- BUTTON -->
-        <button class="register-btn"
-                [disabled]="!isFormValid()"
+        <button type="submit"
+                class="register-btn"
+                [disabled]="form.invalid || !isFormValid()"
                 (click)="onRegister()">
           Register
         </button>
