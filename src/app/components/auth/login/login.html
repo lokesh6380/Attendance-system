@@ -15,58 +15,71 @@
       <h2>Welcome Back</h2>
       <p>Login to your account</p>
 
-      <form (ngSubmit)="onLogin()">
+      <form (ngSubmit)="onLogin()" [class.locked]="lockTime > 0">
 
         <!-- EMAIL -->
-        <div class="input-group">
+        <div class="input-group" [class.disabled]="lockTime > 0">
           <input type="email"
                  [(ngModel)]="email"
                  name="email"
+                 [disabled]="lockTime > 0"
                  required>
           <label>Email</label>
         </div>
 
         <!-- PASSWORD -->
         <div class="input-group password-group"
-             [class.shake]="shake">
+             [class.shake]="shake"
+             [class.disabled]="lockTime > 0">
 
           <input [type]="showPassword ? 'text' : 'password'"
                  [(ngModel)]="password"
                  name="password"
+                 [disabled]="lockTime > 0"
                  required>
 
           <label>Password</label>
 
-          <!-- MODERN EYE BUTTON -->
+          <!-- EYE BUTTON -->
           <button type="button"
                   class="eye-toggle"
+                  [disabled]="lockTime > 0"
                   (click)="togglePassword()">
             {{ showPassword ? 'Hide' : 'Show' }}
           </button>
 
         </div>
 
-        <!-- ERROR -->
-        <p class="error" *ngIf="errorMessage">
-          {{ errorMessage }}
-        </p>
+        <!-- ERROR MESSAGE -->
+        <div class="error-container" *ngIf="errorMessage" [class.active]="errorMessage">
+          <div class="error-box">
+            <span class="error-dot"></span>
+            <p class="error">{{ errorMessage }}</p>
+          </div>
+        </div>
 
-        <!-- TIMER -->
-        <p class="timer" *ngIf="lockTime > 0">
-          Try again in {{ lockTime }}s
-        </p>
+        <!-- 🔥 NEW COUNTDOWN DISPLAY (ADDED) -->
+        <div *ngIf="lockTime > 0" class="lock-info">
+          🔒 Login disabled for <strong>{{ lockTime }}</strong> seconds
+        </div>
 
         <!-- FORGOT -->
-        <p class="forgot" (click)="forgotPassword()">
+        <p class="forgot" (click)="forgotPassword()" [class.disabled]="lockTime > 0">
           Forgot Password?
         </p>
 
         <!-- BUTTON -->
         <button type="submit"
                 class="login-btn"
+                [class.locked]="lockTime > 0"
                 [disabled]="lockTime > 0 || isLoading">
 
-          {{ isLoading ? 'Please wait...' : 'Login' }}
+          <span *ngIf="lockTime > 0" class="button-timer">
+            🔒 {{ lockTime }}s
+          </span>
+          <span *ngIf="lockTime <= 0">
+            {{ isLoading ? 'Please wait...' : 'Login' }}
+          </span>
 
         </button>
 
