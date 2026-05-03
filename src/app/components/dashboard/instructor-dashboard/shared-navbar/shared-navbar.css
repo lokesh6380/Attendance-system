@@ -13,7 +13,7 @@
   padding: 0 25px;
 
   background: rgba(20, 25, 60, 0.85);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   color: white;
 
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
@@ -26,6 +26,11 @@
   font-weight: bold;
   cursor: pointer;
   letter-spacing: 1px;
+  transition: 0.3s;
+}
+
+.logo:hover {
+  color: #00d4ff;
 }
 
 /* NAV LINKS */
@@ -40,11 +45,52 @@
   font-size: 15px;
   cursor: pointer;
   position: relative;
-  transition: 0.3s;
+
+  transition: all 0.3s ease;
+  transform: translateY(0);
+  padding: 5px 0;
 }
 
+/* FLOAT + GLOW EFFECT */
 .nav-links a:hover {
   color: #00d4ff;
+  transform: translateY(-4px);
+
+  /* Glow */
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.7),
+               0 0 16px rgba(0, 212, 255, 0.5);
+
+  box-shadow: 0 5px 15px rgba(0, 212, 255, 0.2);
+}
+
+/* UNDERLINE ANIMATION */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+
+  width: 0%;
+  height: 2px;
+
+  background: linear-gradient(90deg, #00d4ff, #2f80ed);
+  border-radius: 2px;
+
+  transition: width 0.3s ease;
+}
+
+/* SHOW UNDERLINE */
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* ACTIVE LINK */
+.nav-links a.active {
+  color: #00d4ff;
+}
+
+.nav-links a.active::after {
+  width: 100%;
 }
 
 /* RIGHT ACTIONS */
@@ -66,6 +112,7 @@
 
 .profile-btn:hover {
   background: #1c5fd4;
+  box-shadow: 0 4px 12px rgba(47, 128, 237, 0.5);
 }
 
 /* LOGOUT BUTTON */
@@ -81,6 +128,7 @@
 
 .logout-btn:hover {
   background: #c0392b;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.5);
 }
 
 /* RESPONSIVE */

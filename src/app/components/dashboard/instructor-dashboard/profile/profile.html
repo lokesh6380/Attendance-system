@@ -1,1 +1,96 @@
-<p>profile works!</p>
+<app-shared-navbar></app-shared-navbar>
+
+<div class="profile-page">
+
+  <!-- 🔥 TOAST -->
+  <div class="toast" *ngIf="toastMessage" [ngClass]="toastType">
+    {{ toastMessage }}
+  </div>
+
+  <div class="profile-wrapper" *ngIf="user">
+
+    <!-- LEFT SIDE (IMAGE + BASIC INFO) -->
+    <div class="profile-left">
+
+      <img 
+        [src]="user.profilePic || 'https://i.pravatar.cc/150?img=12'" 
+        alt="Profile"
+        class="profile-img"
+      >
+
+      <label class="upload-btn">
+        Upload Photo
+        <input type="file" (change)="onImageUpload($event)" hidden>
+      </label>
+
+      <h2>{{ user.firstName }} {{ user.lastName }}</h2>
+      <p class="role">Instructor</p>
+
+    </div>
+
+    <!-- RIGHT SIDE (DETAILS) -->
+    <div class="profile-right">
+
+      <h3>Profile Information</h3>
+
+      <div class="grid">
+
+        <div class="form-group">
+          <label>Email</label>
+          <input [value]="user.email" readonly>
+        </div>
+
+        <div class="form-group">
+          <label>First Name</label>
+          <input [(ngModel)]="user.firstName" name="firstName">
+        </div>
+
+        <div class="form-group">
+          <label>Last Name</label>
+          <input [(ngModel)]="user.lastName" name="lastName">
+        </div>
+
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input [(ngModel)]="user.phone" name="phone">
+        </div>
+
+        <div class="form-group">
+          <label>Department</label>
+          <input [(ngModel)]="user.department" name="department">
+        </div>
+
+        <div class="form-group">
+          <label>Experience (Years)</label>
+          <input [(ngModel)]="user.experience" name="experience">
+        </div>
+
+      </div>
+
+      <!-- PASSWORD SECTION -->
+      <h3>Change Password</h3>
+
+      <div class="grid">
+
+        <div class="form-group">
+          <label>New Password</label>
+          <input type="password" [(ngModel)]="newPassword">
+        </div>
+
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" [(ngModel)]="confirmPassword">
+        </div>
+
+      </div>
+
+      <!-- BUTTON -->
+      <button class="update-btn" (click)="updateProfile()">
+        Update Profile
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
