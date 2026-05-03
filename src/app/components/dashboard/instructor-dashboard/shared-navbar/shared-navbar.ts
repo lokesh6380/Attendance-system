@@ -13,26 +13,29 @@ export class SharedNavbarComponent {
 
   constructor(private router: Router) {}
 
-  goToProfile() {
-    this.router.navigate(['/instructor/profile']);
+  goToprofile() {
+    this.router.navigate(['/instructor-dashboard/profile']);
   }
 
   goToDashboard() {
-    this.router.navigate(['/instructor/dashboard']);
+    this.router.navigate(['/instructor-dashboard/overview']);
+  }
+
+goToOverview() {
+    this.router.navigate(['/instructor-dashboard/overview']);
   }
 
   goToStudents() {
-    this.router.navigate(['/instructor/students']);
+    this.router.navigate(['/instructor-dashboard/students']);
   }
 
   goToAttendance() {
-    this.router.navigate(['/instructor/attendance']);
+    this.router.navigate(['/instructor-dashboard/attendance']);
   }
 
   logout() {
     // clear session or token
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('currentUser');
 
     // redirect to login
     this.router.navigate(['/login']);

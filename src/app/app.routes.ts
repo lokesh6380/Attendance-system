@@ -12,7 +12,7 @@ import { Navbar } from './components/navbar/navbar';
 import { InstructorDashboard } from './components/dashboard/instructor-dashboard/instructor-dashboard';
 import { OverviewComponent } from './components/dashboard/instructor-dashboard/overview/overview';
 import { StudentDashboard } from './components/dashboard/student-dashboard/student-dashboard';
-
+import { Profile } from './components/dashboard/instructor-dashboard/profile/profile';
 export const routes: Routes = [
   { path: '', component: LandingPageComponent },
 
@@ -23,6 +23,7 @@ export const routes: Routes = [
   // Instructor Dashboard
   { path: 'instructor-dashboard', component: InstructorDashboard, children: [
     { path: 'overview', component: OverviewComponent },
+    { path: 'profile', component: Profile },
     { path: '', redirectTo: 'overview', pathMatch: 'full' }
   ]},
 
