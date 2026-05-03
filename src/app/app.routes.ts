@@ -11,8 +11,9 @@ import { LandingPageComponent } from './components/landing-page/landing-page';
 import { Navbar } from './components/navbar/navbar';
 import { InstructorDashboard } from './components/dashboard/instructor-dashboard/instructor-dashboard';
 import { OverviewComponent } from './components/dashboard/instructor-dashboard/overview/overview';
-import { StudentDashboard } from './components/dashboard/student-dashboard/student-dashboard';
+import { Students as InstructorStudents } from './components/dashboard/instructor-dashboard/students/students';
 import { Profile } from './components/dashboard/instructor-dashboard/profile/profile';
+import { StudentDashboard } from './components/dashboard/student-dashboard/student-dashboard';
 export const routes: Routes = [
   { path: '', component: LandingPageComponent },
 
@@ -24,6 +25,7 @@ export const routes: Routes = [
   { path: 'instructor-dashboard', component: InstructorDashboard, children: [
     { path: 'overview', component: OverviewComponent },
     { path: 'profile', component: Profile },
+    { path: 'students', component: InstructorStudents },
     { path: '', redirectTo: 'overview', pathMatch: 'full' }
   ]},
 

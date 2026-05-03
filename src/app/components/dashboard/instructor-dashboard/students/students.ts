@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-
+import { CommonModule } from '@angular/common';
+import { SharedNavbarComponent } from '../shared-navbar/shared-navbar';
 @Component({
   selector: 'app-students',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, SharedNavbarComponent],
   templateUrl: './students.html',
-  styleUrl: './students.css',
+  styleUrls: ['./students.css'],
 })
 export class Students {}

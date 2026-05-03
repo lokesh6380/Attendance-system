@@ -21,7 +21,7 @@ export class SharedNavbarComponent {
     this.router.navigate(['/instructor-dashboard/overview']);
   }
 
-goToOverview() {
+  goToOverview() {
     this.router.navigate(['/instructor-dashboard/overview']);
   }
 
