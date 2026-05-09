@@ -53,7 +53,18 @@
           <label>Role</label>
         </div>
 
-        <!-- PASSWORD -->
+        <!-- PLACE -->
+        <div class="input-group">
+          <select [(ngModel)]="place" name="place" required>
+            <option value="" disabled selected hidden></option>
+            <option value="New York">New York</option>
+            <option value="Los Angeles">Los Angeles</option>
+            <option value="Chicago">Chicago</option>
+            <option value="Houston">Houston</option>
+            <option value="Phoenix">Phoenix</option>
+          </select>
+          <label>Place</label>
+        </div>
         <div class="input-group password-group">
           <input [type]="showPassword ? 'text' : 'password'"
                  [(ngModel)]="password"

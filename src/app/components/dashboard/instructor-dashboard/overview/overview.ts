@@ -43,6 +43,7 @@ export class OverviewComponent implements OnInit {
       name: (user.name ?? `${user.firstName || ''} ${user.lastName || ''}`.trim()) || user.email,
       email: user.email,
       mobile: user.mobile ?? '',
+      place: user.place ?? '',
       status: user.status ?? 'pending',
       role: user.role ?? 'student',
       roleLabel: this.formatRole(user.role)
@@ -77,7 +78,8 @@ export class OverviewComponent implements OnInit {
       s.name?.toLowerCase().includes(this.searchText.toLowerCase()) ||
       s.email?.toLowerCase().includes(this.searchText.toLowerCase()) ||
       s.role?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-      s.mobile?.toString().toLowerCase().includes(this.searchText.toLowerCase())
+      s.mobile?.toString().toLowerCase().includes(this.searchText.toLowerCase()) ||
+      s.place?.toLowerCase().includes(this.searchText.toLowerCase())
     );
   }
 

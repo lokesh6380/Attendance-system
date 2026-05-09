@@ -1,2 +1,35 @@
 <app-shared-navbar></app-shared-navbar>
-<p>students wok</p>
+
+<div class="students-container">
+  <h2>Students List</h2>
+
+  <!-- 🔍 SEARCH BAR -->
+  <input
+    type="text"
+    placeholder="Search students..."
+    [(ngModel)]="searchText"
+    class="search-box"
+  />
+
+  <table class="students-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Role</th>
+        <th>Place</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let user of filteredUsers()">
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.mobile }}</td>
+        <td>{{ user.role }}</td>
+        <td>{{ user.place }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
