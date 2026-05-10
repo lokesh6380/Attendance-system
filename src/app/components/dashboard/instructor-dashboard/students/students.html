@@ -8,6 +8,7 @@
     type="text"
     placeholder="Search students..."
     [(ngModel)]="searchText"
+     (input)="onSearch()"
     class="search-box"
   />
 
@@ -23,7 +24,7 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let user of filteredUsers()">
+      <tr *ngFor="let user of filteredList">
         <td>{{ user.name }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.mobile }}</td>

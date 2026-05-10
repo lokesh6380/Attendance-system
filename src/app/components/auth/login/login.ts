@@ -17,19 +17,23 @@ export class Login implements OnInit, OnDestroy {
   password = '';
   errorMessage = '';
   isLoading = false;
+
   attempts = 0;
   lockTime = 0;
-  shake = false;
   showPassword = false;
+  shake = false;
+
   private lockInterval: any;
-  private lockStartTime: number = 0;
+  private LOCK_DURATION = 60; // seconds
 
   constructor(private router: Router, private ngZone: NgZone) {}
 
+  /* ✅ CHECK BROWSER */
   private isBrowser(): boolean {
-    return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
+    return typeof window !== 'undefined' && !!window.localStorage;
   }
 
+  /* ✅ INIT */
   ngOnInit() {
     this.restoreLockState();
   }
@@ -40,24 +44,20 @@ export class Login implements OnInit, OnDestroy {
     }
   }
 
-  /* RESTORE LOCK AFTER REFRESH */
+  /* ✅ RESTORE LOCK AFTER REFRESH */
   restoreLockState() {
-    if (!this.isBrowser()) {
-      return;
-    }
+    if (!this.isBrowser()) return;
 
-    const savedLockStartTime = localStorage.getItem('loginLockStartTime');
+    const savedStart = localStorage.getItem('loginLockStartTime');
     const savedAttempts = localStorage.getItem('loginAttempts');
 
-    if (savedLockStartTime) {
-      const now = Date.now();
-      const startTime = parseInt(savedLockStartTime);
-      const elapsedSeconds = Math.floor((now - startTime) / 1000);
-      const remainingTime = 60 - elapsedSeconds;
+    if (savedStart) {
+      const elapsed = Math.floor((Date.now() - +savedStart) / 1000);
+      const remaining = this.LOCK_DURATION - elapsed;
 
-      if (remainingTime > 0) {
-        this.lockTime = remainingTime;
-        this.attempts = parseInt(savedAttempts || '3');
+      if (remaining > 0) {
+        this.lockTime = remaining;
+        this.attempts = +(savedAttempts || 0);
         this.startTimer();
       } else {
         this.clearLockState();
@@ -65,23 +65,22 @@ export class Login implements OnInit, OnDestroy {
     }
   }
 
-  /* 🔥 FIXED TIMER (LIVE COUNTDOWN) */
+  /* ✅ TIMER */
   startTimer() {
-    if (this.lockInterval) {
-      clearInterval(this.lockInterval);
-    }
+    if (this.lockInterval) clearInterval(this.lockInterval);
 
     this.lockInterval = setInterval(() => {
       this.ngZone.run(() => {
-        this.lockTime = Math.max(0, this.lockTime - 1);
+        this.lockTime--;
 
-        if (this.lockTime === 0) {
+        if (this.lockTime <= 0) {
           this.clearLockState();
         }
       });
     }, 1000);
   }
 
+  /* ✅ CLEAR LOCK */
   clearLockState() {
     if (this.lockInterval) {
       clearInterval(this.lockInterval);
@@ -94,70 +93,67 @@ export class Login implements OnInit, OnDestroy {
     if (this.isBrowser()) {
       localStorage.removeItem('loginLockStartTime');
       localStorage.removeItem('loginAttempts');
-      localStorage.removeItem('loginLockTime');
     }
 
     this.errorMessage = '';
   }
 
-  togglePassword() {
-    this.showPassword = !this.showPassword;
-  }
-
-  triggerShake() {
-    this.shake = true;
-    setTimeout(() => this.shake = false, 500);
-  }
-
-  /* START LOCK */
+  /* ✅ START LOCK */
   startLock() {
-    if (this.lockInterval) {
-      clearInterval(this.lockInterval);
-    }
-
-    this.lockTime = 60;
-    this.lockStartTime = Date.now();
+    this.lockTime = this.LOCK_DURATION;
 
     if (this.isBrowser()) {
-      localStorage.setItem('loginLockStartTime', this.lockStartTime.toString());
+      localStorage.setItem('loginLockStartTime', Date.now().toString());
       localStorage.setItem('loginAttempts', this.attempts.toString());
     }
 
     this.startTimer();
   }
 
-  goToRegister() {
-    this.router.navigate(['/register']);
+  /* ✅ TOGGLE PASSWORD */
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 
+  /* ✅ SHAKE EFFECT */
+  triggerShake() {
+    this.shake = true;
+    setTimeout(() => (this.shake = false), 500);
+  }
+
+  /* ✅ LOGIN FUNCTION */
   onLogin() {
 
     if (this.lockTime > 0) {
-      this.errorMessage = `🔒 Account locked. Try again in ${this.lockTime}s`;
+      this.errorMessage = `🔒 Locked. Try again in ${this.lockTime}s`;
       return;
     }
 
-    if (!this.email || !this.password) {
-      this.errorMessage = '❌ Please enter email and password';
+    if (!this.email.trim() || !this.password.trim()) {
+      this.errorMessage = '❌ Enter email and password';
       return;
     }
 
-    this.errorMessage = '';
     this.isLoading = true;
+    this.errorMessage = '';
 
     const users = JSON.parse(localStorage.getItem('users') || '[]');
 
+    console.log('Users:', users);
+    console.log('Entered:', this.email, this.password);
+
     const user = users.find((u: any) =>
-      u.email === this.email && u.password === this.password
+      u.email?.trim().toLowerCase() === this.email.trim().toLowerCase() &&
+      u.password?.trim() === this.password.trim()
     );
 
     if (user) {
-
+      /* ✅ SUCCESS */
       this.clearLockState();
 
       localStorage.setItem('currentUser', JSON.stringify(user));
 
-      const role = (user.role || '').toString().toLowerCase();
+      const role = (user.role || '').toLowerCase();
 
       if (role === 'instructor') {
         this.router.navigate(['/instructor-dashboard/overview']);
@@ -165,38 +161,49 @@ export class Login implements OnInit, OnDestroy {
         this.router.navigate(['/student-dashboard']);
       } else if (role === 'sub master') {
         this.router.navigate(['/submaster-dashboard']);
+      } else {
+        this.router.navigate(['/']);
       }
 
       this.isLoading = false;
 
     } else {
-
+      /* ❌ FAILURE */
       this.attempts++;
-      this.errorMessage = `❌ Invalid email or password (Attempt ${this.attempts}/3)`;
       this.triggerShake();
       this.isLoading = false;
 
       if (this.attempts >= 3) {
         this.startLock();
-        this.errorMessage = `🔒 Too many failed attempts. Locked for ${this.lockTime}s`;
+        this.errorMessage = `🔒 Too many attempts. Locked for ${this.lockTime}s`;
+      } else {
+        this.errorMessage = `❌ Invalid credentials (${this.attempts}/3)`;
       }
     }
   }
 
-  /* FORGOT PASSWORD */
+  /* ✅ FORGOT PASSWORD */
   forgotPassword() {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = users.find((u: any) => u.email === this.email);
-
-    if (!this.email) {
+    if (!this.email.trim()) {
       this.errorMessage = 'Enter email first';
       return;
     }
+
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+    const user = users.find((u: any) =>
+      u.email?.trim().toLowerCase() === this.email.trim().toLowerCase()
+    );
 
     if (user) {
       alert(`Your password is: ${user.password}`);
     } else {
       this.errorMessage = 'Email not found';
     }
+  }
+
+  /* ✅ NAVIGATION */
+  goToRegister() {
+    this.router.navigate(['/register']);
   }
 }
